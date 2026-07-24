@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding of Romeo & Juliet</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           1. CORE STYLING & PALETTE (GOLD LUXURY)
+           ========================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-page: #e8e3d9;
+            --bg-card: #fdfbf7;
+            --gold-primary: #b89150;
+            --gold-light: #d4af37;
+            --gold-dark: #8c682f;
+            --btn-gradient: linear-gradient(180deg, #6e5944 0%, #4a3b2c 100%);
+            --btn-border: #9e8362;
+            --text-title: #4a3c2c;
+            --text-sub: #7a6a58;
+            --text-dark: #2c251e;
+            --font-heading: 'Cinzel', serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-page);
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Container Pembatas Layar HP */
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            background-color: var(--bg-card);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 35px rgba(0,0,0,0.15);
+            padding-bottom: 90px;
+            overflow-x: hidden;
+            border-left: 1px solid #dcd5c7;
+            border-right: 1px solid #dcd5c7;
+            background-image: radial-gradient(#b89150 0.4px, transparent 0.4px);
+            background-size: 16px 16px;
+            background-color: #fdfbf7;
+        }
+
+        /* Ornamen Garis & Frame */
+        .corner-decor {
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.85;
+        }
+        .top-left { top: 12px; left: 12px; }
+        .top-right { top: 12px; right: 12px; transform: scaleX(-1); }
+
+        .ornament-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .ornament-divider .line {
+            height: 1px;
+            width: 45px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+        }
+        .ornament-divider .diamond {
+            color: var(--gold-primary);
+            font-size: 10px;
+            transform: rotate(45deg);
+        }
+
+        .inner-border-frame {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px solid rgba(184, 145, 80, 0.3);
+            pointer-events: none;
+            border-radius: 4px;
+        }
+
+        /* ==========================================
+           2. HERO SECTION
+           ========================================== */
+        .hero-section {
+            padding: 45px 24px 30px 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        .subtitle-top {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .main-title {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            letter-spacing: 4px;
+            color: var(--text-title);
+            font-weight: 600;
+            margin: 10px 0 25px 0;
+        }
+
+        .photo-frame-container {
+            position: relative;
+            width: 100%;
+            max-width: 310px;
+            margin: 0 auto 25px auto;
+            padding: 8px;
+            background: linear-gradient(145deg, #f7ebd0, #b89150, #8c682f, #f7ebd0);
+            border-radius: 36px;
+            box-shadow: 0 14px 28px rgba(140, 104, 47, 0.22);
+        }
+
+        .photo-frame-inner {
+            border-radius: 28px;
+            overflow: hidden;
+            background: #fff;
+            position: relative;
+            aspect-ratio: 4/5;
+            border: 2px solid #fff;
+        }
+
+        .photo-frame-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .couple-name {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: var(--gold-dark);
+            font-weight: 700;
+            margin: 10px 0;
+            letter-spacing: 1px;
+        }
+
+        .event-date {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            color: var(--text-title);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .event-location {
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 25px;
+        }
+
+        .btn-luxury {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            background: var(--btn-gradient);
+            border: 1px solid var(--btn-border);
+            color: #f7ebd0;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(74, 59, 44, 0.28);
+            transition: all 0.3s ease;
+            width: 85%;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .btn-luxury:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(74, 59, 44, 0.38);
+        }
+
+        /* ==========================================
+           3. CARD SECTIONS GENERAL
+           ========================================== */
+        .section-card {
+            margin: 25px 20px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 25px 20px;
+            border: 1px solid #eae2d5;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            text-align: center;
+            position: relative;
+        }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--text-title);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        /* ==========================================
+           4. LOKASI & MAPS SECTION
+           ========================================== */
+        .event-box {
+            background: #faf8f5;
+            border: 1px dashed var(--gold-primary);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .event-box h4 {
+            font-family: var(--font-heading);
+            color: var(--gold-dark);
+            margin-bottom: 5px;
+        }
+
+        .maps-wrapper {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 1px solid #e2d8c8;
+        }
+
+        .maps-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ==========================================
+           5. GALLERY SECTION
+           ========================================== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e8e0d2;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item.large {
+            grid-column: span 2;
+            aspect-ratio: 16/9;
+        }
+
+        /* ==========================================
+           6. RSVP / KONFIRMASI WA
+           ========================================== */
+        .rsvp-form .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border: 1px solid #e2d8c8;
+            border-radius: 10px;
+            background-color: #faf9f6;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            outline: none;
+        }
+
+        .rsvp-form .form-control:focus {
+            border-color: var(--gold-primary);
+            background-color: #fff;
+        }
+
+        textarea.form-control { resize: none; height: 80px; }
+
+        .btn-wa {
+            background: linear-gradient(180deg, #25D366 0%, #128C7E 100%);
+            border: 1px solid #128C7E;
+            color: #fff;
+        }
+
+        /* ==========================================
+           7. FLOATING BOTTOM NAVIGATION
+           ========================================== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: #ffffff;
+            border-top: 1px solid #e8e0d2;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 12px 0;
+            z-index: 1000;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #8c7b6c;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+            gap: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item i { font-size: 1rem; }
+
+        .nav-item.active, .nav-item:hover {
+            color: var(--gold-dark);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="inner-border-frame"></div>
+
+        <!-- SVG Ornamen Sudut -->
+        <svg class="corner-decor top-left" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 2V35M2 2H35M2 2L30 30" stroke="#b89150" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="2" cy="2" r="2" fill="#b89150"/>
+        </svg>
+        <svg class="corner-decor top-right" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 2V35M2 2H35M2 2L30 30" stroke="#b89150" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="2" cy="2" r="2" fill="#b89150"/>
+        </svg>
+
+        <!-- BERANDA / HERO SECTION -->
+        <section class="hero-section" id="beranda">
+            <p class="subtitle-top">UNDANGAN PERNIKAHAN ONLINE</p>
+            
+            <div class="ornament-divider">
+                <div class="line"></div>
+                <div class="diamond">◆</div>
+                <div class="line"></div>
+            </div>
+
+            <h1 class="main-title">THE WEDDING OF</h1>
+
+            <div class="photo-frame-container">
+                <div class="photo-frame-inner">
+                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800" alt="Romeo and Juliet Prewedding">
+                </div>
+            </div>
+
+            <h2 class="couple-name">Romeo & Juliet</h2>
+
+            <div class="ornament-divider">
+                <div class="line"></div>
+                <div class="diamond">◆</div>
+                <div class="line"></div>
+            </div>
+
+            <p class="event-date">Sabtu, 24 Oktober 2026</p>
+            <p class="event-location">
+                <i class="fa-solid fa-location-dot" style="color: var(--gold-primary);"></i> HOTEL GRAND BALLROOM, LOMBOK
+            </p>
+
+            <a href="#lokasi" class="btn-luxury">
+                BUKA MAPS & DETAIL
+            </a>
+        </section>
+
+        <!-- SEKSI LOKASI & DETAIL ACARA -->
+        <section class="section-card" id="lokasi">
+            <h3 class="card-title">WAKTU & LOKASI</h3>
+            <div class="ornament-divider" style="margin-top: -5px; margin-bottom: 15px;">
+                <div class="line"></div>
+                <div class="diamond">◆</div>
+                <div class="line"></div>
+            </div>
+
+            <div class="event-box">
+                <h4>AKAD NIKAH</h4>
+                <p style="font-size: 0.8rem; color: var(--text-sub);">Pukul 08:00 - 10:00 WITA</p>
+                <p style="font-size: 0.8rem; font-weight: 600; margin-top: 4px;">Masjid Agung Lombok</p>
+            </div>
+
+            <div class="event-box">
+                <h4>RESEPSI</h4>
+                <p style="font-size: 0.8rem; color: var(--text-sub);">Pukul 11:00 - 14:00 WITA</p>
+                <p style="font-size: 0.8rem; font-weight: 600; margin-top: 4px;">Hotel Grand Ballroom, Lombok</p>
+            </div>
+
+            <!-- Embed Peta Google Maps -->
+            <div class="maps-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126214.35923985167!2d116.04419515!3d-8.6529339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dc6ce3a4e8d3ef7%3A0x3030bfb01007620!2sMataram%2C%20Lombok!5e0!3m2!1sid!2sid!4v1690000000000!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <a href="https://maps.google.com" target="_blank" class="btn-luxury" style="width: 100%;">
+                <i class="fa-solid fa-map-location-dot" style="margin-right: 8px;"></i> PETUNJUK JALAN (MAPS)
+            </a>
+        </section>
+
+        <!-- SEKSI GALERI PREWEDDING -->
+        <section class="section-card" id="gallery">
+            <h3 class="card-title">GALERI PREWEDDING</h3>
+            <div class="ornament-divider" style="margin-top: -5px; margin-bottom: 15px;">
+                <div class="line"></div>
+                <div class="diamond">◆</div>
+                <div class="line"></div>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item large">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="Prewed 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800" alt="Prewed 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=800" alt="Prewed 3">
+                </div>
+            </div>
+        </section>
+
+        <!-- SEKSI RSVP & KONFIRMASI (LANGSUNG KE WA) -->
+        <section class="section-card" id="konfirmasi">
+            <h3 class="card-title">KONFIRMASI KEHADIRAN</h3>
+            <div class="ornament-divider" style="margin-top: -5px; margin-bottom: 15px;">
+                <div class="line"></div>
+                <div class="diamond">◆</div>
+                <div class="line"></div>
+            </div>
+            
+            <form class="rsvp-form" id="waRsvpForm">
+                <input type="text" id="nama" class="form-control" placeholder="Nama Lengkap" required>
+                <input type="number" id="jumlah" class="form-control" placeholder="Jumlah Tamu Hadir" required>
+                <select id="kehadiran" class="form-control" required>
+                    <option value="" disabled selected>Status Kehadiran</option>
+                    <option value="Hadir">Saya akan Hadir</option>
+                    <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
+                </select>
+                <textarea id="pesan" class="form-control" placeholder="Pesan / Doa Ucapan"></textarea>
+
+                <button type="submit" class="btn-luxury btn-wa" style="width: 100%; border-radius: 10px; margin-top: 5px;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem; margin-right: 8px;"></i> KIRIM KE WHATSAPP
+                </button>
+            </form>
+        </section>
+
+        <!-- FLOATING BOTTOM NAVIGATION BAR -->
+        <nav class="bottom-nav">
+            <a href="#beranda" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>BERANDA</span>
+            </a>
+            <a href="#lokasi" class="nav-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>LOKASI</span>
+            </a>
+            <a href="#gallery" class="nav-item">
+                <i class="fa-solid fa-image"></i>
+                <span>GALERI</span>
+            </a>
+            <a href="#konfirmasi" class="nav-item">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>KONFIRMASI</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- SCRIPT WHATSAPP INTEGRATION -->
+    <script>
+        document.getElementById('waRsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 1. Masukkan nomor WhatsApp Mempelai (Gunakan format kode negara, ex: 628123456789)
+            const nomorMempelai = "6281234567890";
+
+            // 2. Ambil Value dari Form
+            const nama = document.getElementById('nama').value;
+            const jumlah = document.getElementById('jumlah').value;
+            const kehadiran = document.getElementById('kehadiran').value;
+            const pesan = document.getElementById('pesan').value;
+
+            // 3. Format Pesan WhatsApp
+            let teksPesan = `Halo, Saya *${nama}*\n\n`;
+            teksPesan += `Ingin mengonfirmasi konfirmasi kehadiran untuk Pernikahan *Romeo & Juliet*:\n`;
+            teksPesan += `- Status: *${kehadiran}*\n`;
+            teksPesan += `- Jumlah Tamu: *${jumlah} Orang*\n`;
+            if (pesan.trim() !== "") {
+                teksPesan += `- Ucapan: _"${pesan}"_\n`;
+            }
+            teksPesan += `\nTerima kasih!`;
+
+            // 4. Encode URL & Direct ke Whatsapp
+            const urlWA = `https://api.whatsapp.com/send?phone=${+6287833685770}&text=${encodeURIComponent(teksPesan)}`;
+            
+            window.open(urlWA, '_blank');
+        });
+
+        // Script untuk mengatur Navigasi Aktif saat diklik
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
