@@ -54,20 +54,73 @@
         .app-container {
             width: 100%;
             max-width: 430px;
+            height: 100vh;
             background-color: var(--bg-card);
-            min-height: 100vh;
             position: relative;
             box-shadow: 0 0 35px rgba(0,0,0,0.15);
-            padding-bottom: 90px;
+            overflow-y: auto;
             overflow-x: hidden;
             border-left: 1px solid #dcd5c7;
             border-right: 1px solid #dcd5c7;
             background-image: radial-gradient(#b89150 0.4px, transparent 0.4px);
             background-size: 16px 16px;
-            background-color: #fdfbf7;
         }
 
-        /* Ornamen & Frame */
+        /* ==========================================
+           2. OVERLAY COVER (OPENING INVITATION)
+           ========================================== */
+        .cover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(253, 251, 247, 0.88), rgba(253, 251, 247, 0.95)),
+                        url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800');
+            background-size: cover;
+            background-position: center;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px 24px 60px 24px;
+            text-align: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .cover-overlay.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .guest-box {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--gold-primary);
+            border-radius: 16px;
+            padding: 16px 20px;
+            width: 90%;
+            box-shadow: 0 6px 20px rgba(184, 145, 80, 0.15);
+            margin-bottom: 15px;
+        }
+
+        .guest-box p {
+            font-size: 0.72rem;
+            color: var(--text-sub);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .guest-box h3 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--text-title);
+        }
+
+        /* ==========================================
+           3. ORNAMEN & FRAME
+           ========================================== */
         .corner-decor {
             position: absolute;
             width: 65px;
@@ -109,12 +162,16 @@
         }
 
         /* ==========================================
-           2. HERO SECTION
+           4. HERO SECTION
            ========================================== */
         .hero-section {
             padding: 45px 24px 30px 24px;
             text-align: center;
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .subtitle-top {
@@ -138,7 +195,7 @@
         .photo-frame-container {
             position: relative;
             width: 100%;
-            max-width: 310px;
+            max-width: 290px;
             margin: 0 auto 25px auto;
             padding: 8px;
             background: linear-gradient(145deg, #f7ebd0, #b89150, #8c682f, #f7ebd0);
@@ -219,7 +276,7 @@
         }
 
         /* ==========================================
-           3. SECTIONS CARD
+           5. SECTIONS CARD
            ========================================== */
         .section-card {
             margin: 25px 20px;
@@ -316,7 +373,7 @@
         }
 
         /* ==========================================
-           4. FLOATING BOTTOM NAVIGATION
+           6. FLOATING NAVIGATION & MUSIC
            ========================================== */
         .bottom-nav {
             position: fixed;
@@ -353,11 +410,65 @@
             color: var(--gold-dark);
             font-weight: 600;
         }
+
+        .music-btn {
+            position: fixed;
+            bottom: 70px;
+            right: calc(50% - 200px);
+            width: 36px;
+            height: 36px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1001;
+            cursor: pointer;
+        }
+
+        @media (max-width: 430px) {
+            .music-btn { right: 18px; }
+        }
+
+        .spin {
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="app-container" id="scrollContainer">
+
+        <!-- FLOATING MUSIC BUTTON -->
+        <div class="music-btn spin" id="musicToggle">
+            <i class="fa-solid fa-music"></i>
+        </div>
+
+        <!-- OVERLAY COVER INVITATION -->
+        <div class="cover-overlay" id="coverOverlay">
+            <div>
+                <p class="subtitle-top">UNDANGAN PERNIKAHAN</p>
+                <h1 class="main-title">THE WEDDING OF</h1>
+                <h2 class="couple-name">Romeo & Juliet</h2>
+            </div>
+
+            <div class="guest-box">
+                <p>Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+                <h3>Tamu Undangan</h3>
+            </div>
+
+            <button class="btn-luxury" onclick="startOpenInvitation()">
+                <i class="fa-envelope-open fa-solid" style="margin-right: 8px;"></i> OPEN INVITATION
+            </button>
+        </div>
+
         <!-- Frame Border Line -->
         <div class="inner-border-frame"></div>
 
@@ -403,7 +514,7 @@
                 <i class="fa-solid fa-location-dot" style="color: var(--gold-primary);"></i> MATARAM, LOMBOK
             </p>
 
-            <a href="#lokasi" class="btn-luxury">
+            <a href="#lokasi" class="btn-luxury" onclick="scrollToSection('lokasi')">
                 BUKA MAPS & DETAIL
             </a>
         </section>
@@ -487,7 +598,7 @@
         </section>
 
         <!-- SEKSI RSVP & KONFIRMASI (LANGSUNG KE WA) -->
-        <section class="section-card" id="konfirmasi">
+        <section class="section-card" id="konfirmasi" style="margin-bottom: 80px;">
             <h3 class="card-title">KONFIRMASI KEHADIRAN</h3>
             <div class="ornament-divider" style="margin-top: -5px; margin-bottom: 15px;">
                 <div class="line"></div>
@@ -513,19 +624,19 @@
 
         <!-- FLOATING BOTTOM NAVIGATION BAR -->
         <nav class="bottom-nav">
-            <a href="#beranda" class="nav-item active">
+            <a href="#beranda" class="nav-item active" onclick="scrollToSection('beranda')">
                 <i class="fa-solid fa-house"></i>
                 <span>BERANDA</span>
             </a>
-            <a href="#lokasi" class="nav-item">
+            <a href="#lokasi" class="nav-item" onclick="scrollToSection('lokasi')">
                 <i class="fa-solid fa-location-dot"></i>
                 <span>LOKASI</span>
             </a>
-            <a href="#gallery" class="nav-item">
+            <a href="#gallery" class="nav-item" onclick="scrollToSection('gallery')">
                 <i class="fa-solid fa-image"></i>
                 <span>GALERI</span>
             </a>
-            <a href="#konfirmasi" class="nav-item">
+            <a href="#konfirmasi" class="nav-item" onclick="scrollToSection('konfirmasi')">
                 <i class="fa-solid fa-circle-check"></i>
                 <span>KONFIRMASI</span>
             </a>
@@ -533,21 +644,87 @@
 
     </div>
 
-    <!-- SCRIPT WHATSAPP INTEGRATION & NAV -->
+    <!-- AUDIO ELEMENT -->
+    <audio id="weddingAudio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- SCRIPT WHATSAPP INTEGRATION, AUDIO, & SLOW SCROLL -->
     <script>
+        const audio = document.getElementById('weddingAudio');
+        let isPlaying = false;
+
+        // FUNGSI UTAMA TOMBOL INVITATION: BUKA COVER & AUTO SCROLL PELAN KE PALING BAWAH
+        function startOpenInvitation() {
+            // Sembunyikan Cover Modal
+            document.getElementById('coverOverlay').classList.add('hide');
+
+            // Play Audio Musik
+            if (!isPlaying) {
+                audio.play();
+                isPlaying = true;
+            }
+
+            // Jalankan Auto Scroll Pelan
+            const container = document.getElementById('scrollContainer');
+            const startPosition = container.scrollTop;
+            const targetPosition = container.scrollHeight - container.clientHeight;
+            const distance = targetPosition - startPosition;
+            
+            // Durasi scroll otomatis (12000 ms = 12 Detik)
+            const duration = 12000; 
+            let startTime = null;
+
+            function slowScrollAnimation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+
+                // Pergerakan scroll halus & konstan
+                container.scrollTop = startPosition + (distance * progress);
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(slowScrollAnimation);
+                }
+            }
+
+            requestAnimationFrame(slowScrollAnimation);
+        }
+
+        // Toggle On/Off Musik
+        const musicBtn = document.getElementById('musicToggle');
+        musicBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                this.classList.remove('spin');
+                this.style.opacity = '0.5';
+            } else {
+                audio.play();
+                isPlaying = true;
+                this.classList.add('spin');
+                this.style.opacity = '1';
+            }
+        });
+
+        // Navigasi manual via Bottom Bar
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Handle RSVP Form
         document.getElementById('waRsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Masukkan Nomor WA Mempelai (Format 62xxx)
             const nomorMempelai = "6287833685770";
-
-            // Ambil Input Form
             const nama = document.getElementById('nama').value;
             const jumlah = document.getElementById('jumlah').value;
             const kehadiran = document.getElementById('kehadiran').value;
             const pesan = document.getElementById('pesan').value;
 
-            // Format Pesan WA
             let teksPesan = `Halo, Saya *${nama}*\n\n`;
             teksPesan += `Ingin mengonfirmasi kehadiran untuk Pernikahan *Romeo & Juliet*:\n`;
             teksPesan += `- Status: *${kehadiran}*\n`;
@@ -557,7 +734,6 @@
             }
             teksPesan += `\nTerima kasih!`;
 
-            // Buka WhatsApp
             const urlWA = `https://api.whatsapp.com/send?phone=${nomorMempelai}&text=${encodeURIComponent(teksPesan)}`;
             window.open(urlWA, '_blank');
         });
@@ -565,7 +741,8 @@
         // Set Nav Active State saat diklik
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
                 navItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
             });
