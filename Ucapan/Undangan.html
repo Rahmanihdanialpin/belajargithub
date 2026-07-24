@@ -49,6 +49,7 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            min-height: 100dvh;
         }
 
         /* Container Pembatas Layar Mobile */
@@ -56,6 +57,7 @@
             width: 100%;
             max-width: 430px;
             height: 100vh;
+            height: 100dvh;
             background-color: var(--bg-card);
             position: relative;
             box-shadow: 0 0 35px rgba(0,0,0,0.15);
@@ -67,14 +69,14 @@
             background-size: 16px 16px;
         }
 
-        /* DUA CLASS INI KUNCI UTAMA FITUR SCROLL LOCK */
+        /* FITUR SCROLL LOCK */
         .app-container.locked {
             overflow: hidden !important;
             touch-action: none !important;
         }
 
         /* ==========================================
-           2. OVERLAY COVER (OPENING INVITATION)
+           2. OVERLAY COVER (FIXED RESPONSIVE)
            ========================================== */
         .cover-overlay {
             position: absolute;
@@ -82,7 +84,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(20, 15, 10, 0.45) 0%, rgba(20, 15, 10, 0.75) 100%),
+            height: 100dvh;
+            background: linear-gradient(180deg, rgba(20, 15, 10, 0.45) 0%, rgba(20, 15, 10, 0.8) 100%),
                         url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800');
             background-size: cover;
             background-position: center;
@@ -91,7 +94,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 45px 24px 50px 24px;
+            padding: clamp(20px, 5vh, 40px) 20px clamp(30px, 6vh, 50px) 20px;
             text-align: center;
             transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.9s ease, visibility 0.9s ease;
         }
@@ -105,10 +108,10 @@
 
         .cover-frame {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
             border: 1px solid rgba(212, 175, 55, 0.4);
             border-radius: 12px;
             pointer-events: none;
@@ -116,34 +119,44 @@
 
         .cover-top-info {
             z-index: 2;
+            width: 100%;
             animation: fadeInDown 1.2s ease;
         }
 
         .cover-subtitle {
-            font-size: 0.68rem;
-            letter-spacing: 4px;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
             color: #e2d8c8;
-            margin-bottom: 6px;
+            margin-bottom: 2px;
             font-weight: 500;
-        }
-
-        .cover-main-title {
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-            letter-spacing: 3px;
-            color: #ffffff;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .cover-couple-name {
             font-family: var(--font-script);
-            font-size: 3.5rem;
+            font-size: clamp(2.8rem, 8vw, 3.5rem);
             color: #f7ebd0;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 20px rgba(184, 145, 80, 0.4);
-            margin: 15px 0 5px 0;
+            margin: 5px 0 2px 0;
             line-height: 1.1;
+        }
+
+        .cover-main-title {
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #f7ebd0;
+            font-weight: 400;
+        }
+
+        .cover-middle-content {
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: auto 0;
         }
 
         .guest-box {
@@ -151,27 +164,33 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(212, 175, 55, 0.5);
-            border-radius: 18px;
-            padding: 18px 24px;
+            border-radius: 16px;
+            padding: 12px 20px;
             width: 90%;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            z-index: 2;
             animation: fadeInUp 1.2s ease;
         }
 
         .guest-box p {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #dcd5c7;
             letter-spacing: 1px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
 
         .guest-box h3 {
             font-family: var(--font-heading);
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: #ffffff;
             letter-spacing: 1px;
+        }
+
+        .cover-bottom-action {
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
 
         .btn-open-invitation {
@@ -180,11 +199,11 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 14px 32px;
+            padding: 12px 28px;
             background: var(--btn-gradient);
             border: 1px solid var(--btn-border);
             color: #ffffff;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             letter-spacing: 2px;
             border-radius: 30px;
@@ -539,7 +558,7 @@
 </head>
 <body>
 
-    <!-- CONTAINER SECARA DEFAULT DIBERI CLASS 'locked' AGAR TIDAK BISA DI-SCROLL -->
+    <!-- CONTAINER UNTUK HALAMAN LENGKAP -->
     <div class="app-container locked" id="scrollContainer">
 
         <!-- FLOATING MUSIC BUTTON -->
@@ -547,29 +566,33 @@
             <i class="fa-solid fa-music"></i>
         </div>
 
-        <!-- OVERLAY COVER INVITATION -->
+        <!-- OVERLAY COVER INVITATION (TIDAK AKAN TERPOTONG LAGI) -->
         <div class="cover-overlay" id="coverOverlay">
             <div class="cover-frame"></div>
 
             <div class="cover-top-info">
                 <p class="cover-subtitle">THE WEDDING OF</p>
                 <h1 class="cover-couple-name">Romeo & Juliet</h1>
-                <div class="ornament-divider" style="margin: 5px 0;">
+                <div class="ornament-divider" style="margin: 2px 0 6px 0;">
                     <div class="line" style="background: linear-gradient(90deg, transparent, #d4af37, transparent);"></div>
                     <div class="diamond" style="color: #d4af37;">◆</div>
                     <div class="line" style="background: linear-gradient(90deg, transparent, #d4af37, transparent);"></div>
                 </div>
-                <p class="cover-main-title" style="font-size: 0.75rem; color: #f7ebd0; font-weight: 400; letter-spacing: 2px;">24 . 10 . 2026</p>
+                <p class="cover-main-title">24 . 10 . 2026</p>
             </div>
 
-            <div class="guest-box">
-                <p><i class="fa-regular fa-envelope" style="margin-right: 5px;"></i> Kepada Yth.</p>
-                <h3>Tamu Undangan</h3>
+            <div class="cover-middle-content">
+                <div class="guest-box">
+                    <p><i class="fa-regular fa-envelope" style="margin-right: 5px;"></i> Kepada Yth.</p>
+                    <h3>Tamu Undangan</h3>
+                </div>
             </div>
 
-            <button class="btn-open-invitation" onclick="startOpenInvitation()">
-                <i class="fa-envelope-open fa-solid" style="margin-right: 10px;"></i> OPEN INVITATION
-            </button>
+            <div class="cover-bottom-action">
+                <button class="btn-open-invitation" onclick="startOpenInvitation()">
+                    <i class="fa-envelope-open fa-solid" style="margin-right: 10px;"></i> OPEN INVITATION
+                </button>
+            </div>
         </div>
 
         <div class="inner-border-frame"></div>
@@ -763,7 +786,6 @@
         }
 
         function preventKeyScroll(e) {
-            // Mencegah tombol panah, space, PageUp/Down di keyboard
             const keys = [32, 33, 34, 35, 36, 37, 38, 39, 40];
             if (!isInvitationOpened && keys.includes(e.keyCode)) {
                 e.preventDefault();
@@ -771,13 +793,12 @@
             }
         }
 
-        // Pasang Event Listener Pengunci Scroll Saat Pertama Load
+        // Event Listener Pengunci Scroll
         window.addEventListener('wheel', preventDefaultScroll, { passive: false });
         window.addEventListener('touchmove', preventDefaultScroll, { passive: false });
         window.addEventListener('keydown', preventKeyScroll, { passive: false });
         container.addEventListener('scroll', preventDefaultScroll);
 
-        // Fungsi Memutar Musik
         function playMusic() {
             audio.play();
             isPlaying = true;
@@ -785,7 +806,6 @@
             musicBtn.style.opacity = '1';
         }
 
-        // Fungsi Menghentikan Musik
         function pauseMusic() {
             audio.pause();
             isPlaying = false;
@@ -793,9 +813,7 @@
             musicBtn.style.opacity = '0.5';
         }
 
-        // FUNGSI UTAMA TOMBOL OPEN INVITATION (BUKA KUNCI SCROLL)
         function startOpenInvitation() {
-            // Set status terkelupas
             isInvitationOpened = true;
 
             // Buka Kunci CSS Class
@@ -810,15 +828,15 @@
             // Hide Overlay Cover
             document.getElementById('coverOverlay').classList.add('hide');
 
-            // Play Audio Musik
+            // Play Music
             playMusic();
 
-            // Jalankan Auto-Scroll Pelan
+            // Auto-Scroll Animation
             const startPosition = container.scrollTop;
             const targetPosition = container.scrollHeight - container.clientHeight;
             const distance = targetPosition - startPosition;
             
-            const duration = 12000; // Durasi scroll (12 detik)
+            const duration = 12000;
             let startTime = null;
 
             function slowScrollAnimation(currentTime) {
@@ -831,7 +849,6 @@
                 if (timeElapsed < duration) {
                     requestAnimationFrame(slowScrollAnimation);
                 } else {
-                    // OTOMATIS MATIKAN MUSIK SAAT KELAR SCROLLING
                     pauseMusic();
                 }
             }
@@ -839,7 +856,6 @@
             requestAnimationFrame(slowScrollAnimation);
         }
 
-        // Manual Toggle On/Off Musik via Tombol Floating
         musicBtn.addEventListener('click', function() {
             if (isPlaying) {
                 pauseMusic();
@@ -848,16 +864,14 @@
             }
         });
 
-        // Navigasi Manual via Bottom Bar
         function scrollToSection(id) {
-            if (!isInvitationOpened) return; // Tidak berfungsi kalau belum di-open
+            if (!isInvitationOpened) return;
             const el = document.getElementById(id);
             if(el) {
                 el.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // Handle RSVP Form
         document.getElementById('waRsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -880,7 +894,6 @@
             window.open(urlWA, '_blank');
         });
 
-        // Highlight Active Tab Navbar
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
