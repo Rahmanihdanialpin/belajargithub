@@ -67,6 +67,12 @@
             background-size: 16px 16px;
         }
 
+        /* DUA CLASS INI KUNCI UTAMA FITUR SCROLL LOCK */
+        .app-container.locked {
+            overflow: hidden !important;
+            touch-action: none !important;
+        }
+
         /* ==========================================
            2. OVERLAY COVER (OPENING INVITATION)
            ========================================== */
@@ -533,7 +539,8 @@
 </head>
 <body>
 
-    <div class="app-container" id="scrollContainer">
+    <!-- CONTAINER SECARA DEFAULT DIBERI CLASS 'locked' AGAR TIDAK BISA DI-SCROLL -->
+    <div class="app-container locked" id="scrollContainer">
 
         <!-- FLOATING MUSIC BUTTON -->
         <div class="music-btn" id="musicToggle" style="opacity: 0.5;">
@@ -738,11 +745,37 @@
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- SCRIPT LOGIKA BUKA COVER, AUTO SCROLL, DAN AUTO STOP MUSIC -->
+    <!-- SCRIPT EVENT LOCK, AUDIO, DAN AUTO SCROLL -->
     <script>
         const audio = document.getElementById('weddingAudio');
         const musicBtn = document.getElementById('musicToggle');
+        const container = document.getElementById('scrollContainer');
         let isPlaying = false;
+        let isInvitationOpened = false;
+
+        // FUNGSI UNTUK MENDAUR & MENCEGAH INTERAKSI SCROLL
+        function preventDefaultScroll(e) {
+            if (!isInvitationOpened) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
+
+        function preventKeyScroll(e) {
+            // Mencegah tombol panah, space, PageUp/Down di keyboard
+            const keys = [32, 33, 34, 35, 36, 37, 38, 39, 40];
+            if (!isInvitationOpened && keys.includes(e.keyCode)) {
+                e.preventDefault();
+                return false;
+            }
+        }
+
+        // Pasang Event Listener Pengunci Scroll Saat Pertama Load
+        window.addEventListener('wheel', preventDefaultScroll, { passive: false });
+        window.addEventListener('touchmove', preventDefaultScroll, { passive: false });
+        window.addEventListener('keydown', preventKeyScroll, { passive: false });
+        container.addEventListener('scroll', preventDefaultScroll);
 
         // Fungsi Memutar Musik
         function playMusic() {
@@ -760,8 +793,20 @@
             musicBtn.style.opacity = '0.5';
         }
 
-        // BUKA INVITATION & AUTO-SCROLL DENGAN AUTO-STOP MUSIC
+        // FUNGSI UTAMA TOMBOL OPEN INVITATION (BUKA KUNCI SCROLL)
         function startOpenInvitation() {
+            // Set status terkelupas
+            isInvitationOpened = true;
+
+            // Buka Kunci CSS Class
+            container.classList.remove('locked');
+
+            // Lepaskan Listener Pencegah Scroll
+            window.removeEventListener('wheel', preventDefaultScroll);
+            window.removeEventListener('touchmove', preventDefaultScroll);
+            window.removeEventListener('keydown', preventKeyScroll);
+            container.removeEventListener('scroll', preventDefaultScroll);
+
             // Hide Overlay Cover
             document.getElementById('coverOverlay').classList.add('hide');
 
@@ -769,7 +814,6 @@
             playMusic();
 
             // Jalankan Auto-Scroll Pelan
-            const container = document.getElementById('scrollContainer');
             const startPosition = container.scrollTop;
             const targetPosition = container.scrollHeight - container.clientHeight;
             const distance = targetPosition - startPosition;
@@ -806,6 +850,7 @@
 
         // Navigasi Manual via Bottom Bar
         function scrollToSection(id) {
+            if (!isInvitationOpened) return; // Tidak berfungsi kalau belum di-open
             const el = document.getElementById(id);
             if(el) {
                 el.scrollIntoView({ behavior: 'smooth' });
@@ -840,6 +885,7 @@
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
+                if (!isInvitationOpened) return;
                 navItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
             });
